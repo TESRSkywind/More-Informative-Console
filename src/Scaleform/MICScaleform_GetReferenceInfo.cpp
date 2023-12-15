@@ -5,6 +5,7 @@
 #include "Util/NameUtil.h"
 #include "Util/ScaleformUtil.h"
 #include <RE/T/TESForm.h>
+#include <RE/B/BSPointerHandle.h>
 #include "TranslationCache.h"
 
 void MICScaleform_GetReferenceInfo::Call(Params& a_params)
@@ -17,7 +18,6 @@ void MICScaleform_GetReferenceInfo::Call(Params& a_params)
 
 	movie->CreateObject(results);
 
-	//Get the reference selected in the console
 	RE::TESObjectREFR* ref = RE::Console::GetSelectedRef().get();
 	if (ref != nullptr) {
 		logger::debug("GetReferenceInfo: ref found");

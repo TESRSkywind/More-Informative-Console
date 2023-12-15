@@ -54,7 +54,8 @@ extern "C" DLLEXPORT constinit auto SKSEPlugin_Version = []() {
 	v.PluginVersion(Version::MAJOR);
 	v.PluginName("More Informative Console");
 	v.AuthorName("Linthar");
-	v.UsesAddressLibrary(true);
+	v.UsesUpdatedStructs();
+	v.UsesAddressLibrary();
 	v.CompatibleVersions({ SKSE::RUNTIME_LATEST });
 
 	return v;
@@ -75,7 +76,7 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a
 	const auto ver = a_skse->RuntimeVersion();
 	if (ver <
 #ifndef SKYRIMVR
-		SKSE::RUNTIME_1_5_39
+		SKSE::RUNTIME_LATEST
 #else
 		SKSE::RUNTIME_VR_1_4_15
 #endif

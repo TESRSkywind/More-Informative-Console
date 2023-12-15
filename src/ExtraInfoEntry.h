@@ -62,6 +62,7 @@ enum priority
 	priority_Actor_Stamina,
 	priority_Actor_Level,
 	priority_Actor_Race,
+	priority_Actor_Voice,
 	priority_Actor_Spells,
 	priority_Actor_Spells_AddedSpell,
 	priority_Actor_Spells_BaseSpell,

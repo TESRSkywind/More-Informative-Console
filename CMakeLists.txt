@@ -6,7 +6,7 @@ set(VERSION 1.1.0)
 
 option(COPY_BUILD "Copy the build output to the Skyrim directory." OFF)
 option(BUILD_SKYRIMVR "Build for Skyrim VR" OFF)
-option(BUILD_SKYRIMAE "Build for Skyrim AE" OFF)
+option(BUILD_SKYRIMAE "Build for Skyrim AE" ON)
 
 # ---- Cache build vars ----
 
@@ -158,6 +158,10 @@ set(SOURCES
 	src/TranslationCache.h
 	src/MIC_Scaleform.cpp
 	src/MIC_Scaleform.h
+	src/Scaleform/MICScaleform_CopyToClipboard.cpp
+	src/Scaleform/MICScaleform_CopyToClipboard.h
+	src/Scaleform/MICScaleform_GetClipboard.cpp
+	src/Scaleform/MICScaleform_GetClipboard.h
 	src/Scaleform/MICScaleform_GetExtraData.cpp
 	src/Scaleform/MICScaleform_GetExtraData.h
 	src/Scaleform/MICScaleform_GetQuestData.cpp

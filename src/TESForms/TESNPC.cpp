@@ -68,6 +68,9 @@ void GetCharacterData(ExtraInfoEntry* resultArray, RE::TESForm* refForm, RE::TES
 
 			logger::debug("GetCharacterData: Ending Race");
 
+			//Handle Voice Data
+			GetVoiceData(resultArray, actorBase);
+
 			//Handle Spells
 			GetSpellsForNPC(resultArray, actor, actorBase);
 
@@ -89,6 +92,30 @@ void GetCharacterData(ExtraInfoEntry* resultArray, RE::TESForm* refForm, RE::TES
 	}
 
 	logger::debug("GetExtraData: GetCharacter End");
+}
+
+void GetVoiceData(ExtraInfoEntry* resultArray, RE::TESActorBase* actorBase)
+{
+	logger::debug("GetVoiceData: Starting Voice Data");
+
+	if (actorBase)
+	{
+		RE::TESActorBaseData* actorBaseData = static_cast<RE::TESActorBaseData*>(actorBase);
+		//Actor Base Spells
+		RE::BGSVoiceType* voiceType = actorBaseData->voiceType;
+
+		ExtraInfoEntry* voiceEntry;
+
+		std::string voiceName = GetName(voiceType);
+
+		CreateExtraInfoEntry(voiceEntry, GetTranslation("$VoiceType"), voiceName, priority_Actor_Voice);
+
+		//GetFormData(voiceEntry, voiceType, nullptr);
+
+		resultArray->PushBack(voiceEntry);
+	}
+
+	logger::debug("GetCharacterData:  Done with voice data");
 }
 
 void GetSpellsForNPC(ExtraInfoEntry* resultArray, RE::Actor* actor, RE::TESActorBase* actorBase)

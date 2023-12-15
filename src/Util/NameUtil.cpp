@@ -274,6 +274,18 @@ std::string GetName(RE::TESForm* baseForm, RE::TESObjectREFR* refForm )
 
 						break;
 					}
+
+					case RE::FormType::VoiceType:
+					{
+						logger::debug("GetExtraData: GetName VoiceType");
+						RE::BGSVoiceType* voiceType = static_cast<RE::BGSVoiceType*>(baseForm);
+						if (voiceType)
+						{
+							name = voiceType->formEditorID.c_str();
+						}
+
+						break;
+					}
 					//normally the reference should be passed as refForm and not baseForm. But for scripts we might only have the reference passed
 					//in which case we need to look up the base object to get the actual name
 					case RE::FormType::ActorCharacter:
@@ -312,7 +324,7 @@ std::string GetName(RE::TESForm* baseForm, RE::TESObjectREFR* refForm )
 			}
 		}
 	}
-	logger::debug(("GetExtraData: GetName End: " + name).c_str());
+	logger::debug("GetExtraData: GetName End: {}", name);
 	
 	return name;
 }

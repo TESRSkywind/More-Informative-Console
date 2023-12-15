@@ -10,7 +10,12 @@ void AddModelEntry(ExtraInfoEntry* resultArray, std::string modelType, RE::TESMo
 
 	if (model) {
 		std::string modelPath = model->GetModel();
-
+		ExtraInfoEntry* modelPathEntry;
+		CreateExtraInfoEntry(modelPathEntry, modelType, modelPath, priority);
+		resultArray->PushBack(modelPathEntry);
+		
+		logger::debug("Ending AddModelEntry for model");
+		/*
 		if (modelPath != "") {
 			logger::debug("Get Model path");
 
@@ -39,10 +44,9 @@ void AddModelEntry(ExtraInfoEntry* resultArray, std::string modelType, RE::TESMo
 
 			logger::debug(IntToString( handler->compiledFileCollection.smallFiles.size()).c_str() ) ;
 			//logger::debug(IntToString(handler->files.end).c_str());
-		}
+		}*/
 	}
 
-	logger::debug("Ending AddModelEntry for model");
 }
 /*
 void AddTextureEntry(ExtraInfoEntry* resultArray, RE::TESModel* model, int textureNumber)

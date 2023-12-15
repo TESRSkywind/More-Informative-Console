@@ -10,7 +10,7 @@
 
 void GetModelTextures(ExtraInfoEntry* resultArray, RE::TESForm* baseForm )
 {
-	logger::debug(("Starting GetModelTextures " + GetFormTypeName((int)baseForm->formType.underlying())).c_str());
+	logger::debug("Starting GetModelTextures {}", GetFormTypeName((int)baseForm->formType.underlying()));
 	switch (baseForm->GetFormType())
 	{
 		case RE::FormType::Static:
@@ -23,6 +23,34 @@ void GetModelTextures(ExtraInfoEntry* resultArray, RE::TESForm* baseForm )
 				AddModelEntry(resultArray, GetTranslation("$Model"), textSwap);
 			}
 
+			break;
+		}
+
+		case RE::FormType::Ammo:
+		{
+			RE::TESAmmo* ammo = baseForm->As<RE::TESAmmo>();
+			if (ammo)
+			{
+				AddModelEntry(resultArray, GetTranslation("$Model"), ammo);
+			}
+			break;
+		}
+
+		case RE::FormType::Armor:
+		{
+			RE::TESObjectARMO* armo = baseForm->As<RE::TESObjectARMO>();
+			const char* femArmor = armo->worldModels[RE::SEXES::kFemale].GetModel();
+			bool singleEntry = strlen(femArmor)== 0;
+			
+			AddModelEntry(resultArray, 
+				GetTranslation(singleEntry ? "$WorldModel" : "$WorldModelMale"), 
+				&(armo->worldModels[RE::SEXES::kMale]));
+
+			if (!singleEntry)
+			{
+				AddModelEntry(resultArray, GetTranslation("$WorldModelFemale"), 
+					&(armo->worldModels[RE::SEXES::kFemale]));
+			}
 			break;
 		}
 
