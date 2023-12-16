@@ -6,15 +6,11 @@
 #include <Windows.h>
 #include <filesystem>
 
-//4-23-2022: Checked for translations needed
-
 void MICScaleform_GetClipboard::Call(Params& a_params)
 {
 	std::string text{};
 	RE::GFxValue* results = a_params.retVal;
 	RE::GFxMovie* movie = a_params.movie;
-
-	//movie->CreateObject(results);
 
 	// Try opening the clipboard
 	if (!IsClipboardFormatAvailable(CF_TEXT) || !OpenClipboard(nullptr))
@@ -23,26 +19,22 @@ void MICScaleform_GetClipboard::Call(Params& a_params)
 	}
 	// Get handle of clipboard object for ANSI text
 	const HANDLE hData = GetClipboardData(CF_TEXT);
-	if (hData == nullptr)
+	if (hData != nullptr)
 	{
-		goto retLbl;
+		// Lock the handle to get the actual text pointer
+		if (const auto pszText = static_cast<const char*>(GlobalLock(hData)); pszText != nullptr)
+		{
+			text = pszText;
+		}
+
+		// Release the lock
+		GlobalUnlock(hData);
+
+		// Release the clipboard
+		CloseClipboard();
 	}
 
-	// Lock the handle to get the actual text pointer
-	if (const auto pszText = static_cast<const char*>(GlobalLock(hData)); pszText != nullptr)
-	{
-		text = pszText;
-	}
-
-	// Release the lock
-	GlobalUnlock(hData);
-
-	// Release the clipboard
-	CloseClipboard();
-
-retLbl:
 	movie->CreateString(results, text.c_str());
-	//RegisterString(results, movie, "retVal", text);
 	logger::debug("Paste op:", text);
 }
 
