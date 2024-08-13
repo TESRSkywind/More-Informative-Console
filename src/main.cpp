@@ -5,6 +5,7 @@
 #include "globals.h"
 #include "EditorIDCache.h"
 #include "TranslationCache.h"
+#include <spdlog/sinks/basic_file_sink.h>
 
 void readINI()
 {
@@ -91,65 +92,72 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a
 
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_skse)
 {
-	logger::info("Establishing interfaces...");
+	readINI();
 
-	#ifndef NDEBUG
-	auto sink = std::make_shared<spdlog::sinks::msvc_sink_mt>();
-#else
-	auto path = logger::log_directory();
-	if (!path)
+	std::shared_ptr<spdlog::logger> log;
+	if (IsDebuggerPresent())
 	{
-		return false;
+		log = std::make_shared<spdlog::logger>(
+			"Global", std::make_shared<spdlog::sinks::msvc_sink_mt>());
+	}
+	else
+	{
+		auto path = logger::log_directory();
+		if (!path)
+		{
+			return false;
+		}
+
+		*path /= Version::PROJECT;
+		*path += ".log"sv;
+
+		auto sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(path->string(), true);
+		log = std::make_shared<spdlog::logger>(
+			"Global", std::make_shared<spdlog::sinks::basic_file_sink_mt>(path->string(), true));
 	}
 
-	*path /= Version::PROJECT;
-	*path += ".log"sv;
-	auto sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(path->string(), true);
-#endif
-
-	auto log = std::make_shared<spdlog::logger>("global log"s, std::move(sink));
-
-#ifndef NDEBUG
-	log->set_level(spdlog::level::trace);
-#else
-	log->set_level(spdlog::level::info);
-	log->flush_on(spdlog::level::info);
-	readINI();
 	//Set the logger print level based on if debug mode is enabled
 	if (MICOptions::MICDebugMode)
 	{
-		log->set_level(spdlog::level::debug);
-		log->flush_on(spdlog::level::debug);
+		log->set_level(spdlog::level::level_enum::debug);
+		log->flush_on(spdlog::level::level_enum::debug);
 	}
 
 	else
 	{
-		log->set_level(spdlog::level::info);
-		log->flush_on(spdlog::level::info);
+		log->set_level(spdlog::level::level_enum::info);
+		log->flush_on(spdlog::level::level_enum::info);
 	}
-#endif
 
 	spdlog::set_default_logger(std::move(log));
-	spdlog::set_pattern("%g(%#): [%^%l%$] %v"s);
+	spdlog::set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%n] [%l] [%t] [%s:%#] %v");
 
 	logger::info(FMT_STRING("{} v{}"), Version::PROJECT, Version::NAME);
 	logger::info("Initalizing");
 
+	if (a_skse->IsEditor())
+	{
+		logger::critical("Loaded in editor, marking as incompatible");
+		return false;
+	}
+
+	logger::info("Before Translation");
+
+	auto translationCache = TranslationCache::GetSingleton();
+	translationCache->CacheTranslations();
+
+	logger::info("Establishing interfaces...");
 
 	SKSE::Init(a_skse);
 	const auto scaleform = SKSE::GetScaleformInterface();
 
 	scaleform->Register(moreInformativeConsoleScaleForm::InstallHooks, "MIC");
-	
+
 	if (!MICOptions::DisableEditorIDs)
 	{
 		auto messaging = SKSE::GetMessagingInterface();
 		messaging->RegisterListener(MessageHandler);
 	}
-
-	auto translationCache = TranslationCache::GetSingleton();
-	translationCache->CacheTranslations();
-
 	logger::info("Plugin Initialization complete.");
 
 	return true;
