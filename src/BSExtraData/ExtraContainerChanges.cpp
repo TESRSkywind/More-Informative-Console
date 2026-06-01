@@ -199,6 +199,11 @@ RE::TESForm* FindEquipedItemInSlot( int slotMask, bool equipRight, bool equipLef
 					{
 						RE::ExtraDataList* extraDataList = *itrExtraList;
 
+						if (!extraDataList)
+						{
+							continue;
+						}
+
 						if (extraDataList->HasType(RE::ExtraDataType::kWorn) || extraDataList->HasType(RE::ExtraDataType::kWornLeft))
 						{
 							equipedSlot = item;
@@ -218,6 +223,10 @@ RE::TESForm* FindEquipedItemInSlot( int slotMask, bool equipRight, bool equipLef
 				for (itrExtraList = inventoryEntryData->extraLists->begin(); itrExtraList != itrExtraListEnd; ++itrExtraList)
 				{
 					RE::ExtraDataList* extraDataList = *itrExtraList;
+					if (!extraDataList)
+					{
+						continue;
+					}
 
 					if( ( equipRight && extraDataList->HasType(RE::ExtraDataType::kWorn) )
 						|| ( equipLeft && extraDataList->HasType(RE::ExtraDataType::kWornLeft) ) )
