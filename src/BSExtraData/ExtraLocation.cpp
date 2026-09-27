@@ -7,7 +7,7 @@
 
 void ProcessLocationData(ExtraInfoEntry* resultArray, RE::BSExtraData* data)
 {
-	logger::debug("ProcessLocationData Start");
+	REX::DEBUG("ProcessLocationData Start");
 	RE::ExtraLocation* extraLocation = static_cast<RE::ExtraLocation*>(data);
 
 	if (extraLocation)
@@ -29,6 +29,6 @@ void ProcessLocationData(ExtraInfoEntry* resultArray, RE::BSExtraData* data)
 		}
 	}
 
-	logger::debug("ProcessLocationData End");
+	REX::DEBUG("ProcessLocationData End");
 }
 

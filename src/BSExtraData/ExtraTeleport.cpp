@@ -5,7 +5,7 @@
 
 void ProcessTeleportData(ExtraInfoEntry* resultArray, RE::BSExtraData* data)
 {
-	logger::debug("ProcessTeleportData Start");
+	REX::DEBUG("ProcessTeleportData Start");
 	RE::ExtraTeleport* extraTeleport = static_cast<RE::ExtraTeleport*>(data);
 
 	if (extraTeleport)
@@ -29,5 +29,5 @@ void ProcessTeleportData(ExtraInfoEntry* resultArray, RE::BSExtraData* data)
 		}
 	}
 
-	logger::debug("ProcessTeleportData End");
+	REX::DEBUG("ProcessTeleportData End");
 }

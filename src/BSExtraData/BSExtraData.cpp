@@ -21,13 +21,13 @@ const int numberOfExtraDataTypes = 0xBF + 1; //The plus 1 is because there are e
 //get data stored in the BSExtraData format
 void GetBSExtraData(ExtraInfoEntry* resultArray, RE::TESObjectREFR* refForm)
 {
-	logger::debug("Starting GetBSExtraData");
+	REX::DEBUG("Starting GetBSExtraData");
 
 	RE::ExtraDataList* extraList = &refForm->extraList;
 
 	ProcessExtraDataList(resultArray, extraList, refForm);
 
-	logger::debug("Ending GetBSExtraData");
+	REX::DEBUG("Ending GetBSExtraData");
 }
 
 void ProcessExtraDataList(ExtraInfoEntry* resultArray, RE::ExtraDataList* extraList, RE::TESObjectREFR* refForm)

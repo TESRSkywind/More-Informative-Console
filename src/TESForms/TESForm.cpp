@@ -81,7 +81,7 @@ bool GetShouldGetExpandedFormData(RE::TESForm * baseForm)
 //general wrapper for all get form methods
 void GetFormData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm, RE::TESObjectREFR* refForm)
 {
-	logger::debug("GetExtraData: Get Form Data Start {} {}", GetFormTypeName((int)baseForm->formType.underlying()), FormIDToString(baseForm->formID));
+	REX::DEBUG("GetExtraData: Get Form Data Start {} {}", GetFormTypeName((int)baseForm->formType.underlying()), FormIDToString(baseForm->formID));
 
 	bool getExpandedData = GetShouldGetExpandedFormData(baseForm);
 
@@ -102,67 +102,67 @@ void GetFormData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm, RE::TESObje
 			}
 
 			if (baseForm != nullptr && baseFormType == RE::FormType::NPC && (refForm == nullptr || refForm->GetFormType() == RE::FormType::ActorCharacter)) {
-				logger::debug("GetExtraData: Get Form Data character found");
+				REX::DEBUG("GetExtraData: Get Form Data character found");
 				GetCharacterData(resultArray, refForm, baseForm);
 			}
 
 			else if (baseFormType == RE::FormType::MagicEffect) {
-				logger::debug("GetExtraData: Get Form Data magic effect found");
+				REX::DEBUG("GetExtraData: Get Form Data magic effect found");
 				GetMagicEffectData(resultArray, baseForm);
 			}
 
 			else if (baseFormType == RE::FormType::Spell) {
-				logger::debug("GetExtraData: Get Form Data spell found");
+				REX::DEBUG("GetExtraData: Get Form Data spell found");
 				GetSpellData(resultArray, baseForm);
 			}
 
 			else if (baseFormType == RE::FormType::Armor) {
-				logger::debug("GetExtraData: Get Form Data armor found");
+				REX::DEBUG("GetExtraData: Get Form Data armor found");
 				GetArmorData(resultArray, baseForm);
 			}
 
 			else if (baseFormType == RE::FormType::Weapon) {
-				logger::debug("GetExtraData: Get Form Data Weapon found");
+				REX::DEBUG("GetExtraData: Get Form Data Weapon found");
 				GetWeaponData(resultArray, baseForm);
 			}
 			else if (baseFormType == RE::FormType::Ammo) {
-				logger::debug("GetExtraData: Get Form Data Ammo found");
+				REX::DEBUG("GetExtraData: Get Form Data Ammo found");
 				GetAmmoData(resultArray, baseForm);
 			}
 
 			else if (baseFormType == RE::FormType::Container) {
-				logger::debug("GetExtraData: Get Form Data Container found");
+				REX::DEBUG("GetExtraData: Get Form Data Container found");
 				GetContainerData(resultArray, baseForm);
 			}
 			else if (baseFormType == RE::FormType::Race) {
-				logger::debug("GetExtraData: Get Form Data Race found");
+				REX::DEBUG("GetExtraData: Get Form Data Race found");
 				GetRaceEntry(resultArray, baseForm);
 			}
 
 			else if (baseFormType == RE::FormType::TextureSet) {
-				logger::debug("GetExtraData: Get Form Data Texture Set found");
+				REX::DEBUG("GetExtraData: Get Form Data Texture Set found");
 				GetTextureSet(resultArray, baseForm);
 			}
 
 			else if (baseFormType == RE::FormType::Armature) {
-				logger::debug("GetExtraData: Get Form Data ARMA found");
+				REX::DEBUG("GetExtraData: Get Form Data ARMA found");
 				GetArmaData(resultArray, baseForm);
 			}
 
 			else if (baseFormType == RE::FormType::Cell) {
-				logger::debug("GetExtraData: Get Form Data CELL found");
+				REX::DEBUG("GetExtraData: Get Form Data CELL found");
 				GetCellEntry(resultArray, baseForm);
 			}
 			else if (baseFormType == RE::FormType::Location) {
-				logger::debug("GetExtraData: Get Form Data LCTN found");
+				REX::DEBUG("GetExtraData: Get Form Data LCTN found");
 				GetLocationEntry(resultArray, baseForm);
 			} 
 			else if (baseFormType == RE::FormType::Quest) {
-				logger::debug("GetExtraData: Get Form Data Quest found");
+				REX::DEBUG("GetExtraData: Get Form Data Quest found");
 				GetQuestInformation(resultArray, baseForm);
 			} 
 			else if (baseFormType == RE::FormType::Global) {
-				logger::debug("GetExtraData: Get Form Data Global found");
+				REX::DEBUG("GetExtraData: Get Form Data Global found");
 				GetGlobalInformation(resultArray, baseForm);
 			} 
 
@@ -177,13 +177,13 @@ void GetFormData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm, RE::TESObje
 		resultArray->CopyChildren(extraInfoEntryCached);
 	}
 
-	logger::debug("GetExtraData: Get Form Data End");
+	REX::DEBUG("GetExtraData: Get Form Data End");
 }
 
 //get data common to all form types
 void GetCommonFormData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm, RE::TESObjectREFR* refForm)
 {
-	logger::debug("GetCommonFormData Start");
+	REX::DEBUG("GetCommonFormData Start");
 
 	std::string name = "";
 
@@ -228,7 +228,7 @@ void GetCommonFormData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm, RE::T
 
 	//If the base form was found in FF, get the template for that form which is going to be more relevant
 	if (baseForm->formType == RE::FormType::NPC && baseForm->formID >= 0xFF000000) {
-		logger::debug("Found actor with FF base form");
+		REX::DEBUG("Found actor with FF base form");
 		auto baseFormNonFF = GetRootTemplate(baseForm);
 		formID = FormIDToString(baseFormNonFF->formID);
 	}
@@ -280,7 +280,7 @@ void GetCommonFormData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm, RE::T
 		auto formWithEnchantment = baseForm ? baseForm->As<RE::TESEnchantableForm>() : nullptr;
 		if (formWithEnchantment && formWithEnchantment->formEnchanting)
 		{
-			logger::debug("GetCommonFormData: Checking enchantment");
+			REX::DEBUG("GetCommonFormData: Checking enchantment");
 
 			auto enchantmentForm = formWithEnchantment->formEnchanting;
 
@@ -313,20 +313,20 @@ void GetCommonFormData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm, RE::T
 		}
 	}
 
-	logger::debug("GetCommonFormData: GetCommonFormData End");
+	REX::DEBUG("GetCommonFormData: GetCommonFormData End");
 }
 
 //get information related to where mods the form is found in
 void GetFormLocationData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm, RE::TESForm* refForm)
 {
-	logger::debug("GetExtraData: GetFormLocationData Start");
+	REX::DEBUG("GetExtraData: GetFormLocationData Start");
 
 	ExtraInfoEntry* formLocationHolder;
 	CreateExtraInfoEntry(formLocationHolder, GetTranslation("$FormLocation"), "", priority_FormLocation);
 
 	//this method may be called at a time we only have a base form, and in that case skip anything related to the reform
 	if (refForm != nullptr && GetHasSourceFileArray(refForm)) {
-		logger::debug("GetExtraData: GetFormLocationData ref mod info found");
+		REX::DEBUG("GetExtraData: GetFormLocationData ref mod info found");
 
 		//Reference Form
 
@@ -356,13 +356,13 @@ void GetFormLocationData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm, RE:
 
 		GetModInfoData(allModsTouchingReferenceHolder, refForm, SkyrimESMNotDetectedBug);
 
-		logger::debug("GetExtraData: Ref Last Modified By {}", refLastDefinedIn);
+		REX::DEBUG("GetExtraData: Ref Last Modified By {}", refLastDefinedIn);
 
 		formLocationHolder->PushBack(allModsTouchingReferenceHolder);
 	}
 	//Base Form
 
-	logger::debug("GetExtraData: GetFormLocationData at pBaseSection section");
+	REX::DEBUG("GetExtraData: GetFormLocationData at pBaseSection section");
 
 	auto baseFormToCheck = baseForm;
 
@@ -372,7 +372,7 @@ void GetFormLocationData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm, RE:
 	}
 
 	if (GetHasSourceFileArray(baseFormToCheck)) {
-		logger::debug("GetExtraData: GetFormLocationData baseFormModInfo found");
+		REX::DEBUG("GetExtraData: GetFormLocationData baseFormModInfo found");
 
 		std::string baseFirstDefinedIn = GetFirstFormLocationName(baseFormToCheck);
 
@@ -393,19 +393,19 @@ void GetFormLocationData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm, RE:
 
 		GetModInfoData(allModsTouchingBaseHolder, baseFormToCheck, false);
 
-		logger::debug("GetExtraData: Base Last Modified By {}", baseLastDefinedIn);
+		REX::DEBUG("GetExtraData: Base Last Modified By {}", baseLastDefinedIn);
 
 		formLocationHolder->PushBack(allModsTouchingBaseHolder);
 	}
 
 	resultArray->PushBack(formLocationHolder);
 
-	logger::debug("GetExtraData: GetFormLocationData End");
+	REX::DEBUG("GetExtraData: GetFormLocationData End");
 }
 
 void GetModInfoData(ExtraInfoEntry* resultArray, RE::TESForm* form, bool SkyrimESMNotDetectedBug)
 {
-	logger::debug("GetExtraData: GetModInfoData start");
+	REX::DEBUG("GetExtraData: GetModInfoData start");
 
 	int numMods = GetNumberOfSourceFiles(form);
 
@@ -425,13 +425,13 @@ void GetModInfoData(ExtraInfoEntry* resultArray, RE::TESForm* form, bool SkyrimE
 		resultArray->PushBack(modEntry);
 	}
 
-	logger::debug("GetExtraData: GetModInfoData end");
+	REX::DEBUG("GetExtraData: GetModInfoData end");
 }
 
 //Get all keywords for forms that store keywords in the normal location
 void GetKeywords(ExtraInfoEntry* resultArray, RE::BGSKeywordForm* keywordForm)
 {
-	logger::debug("GetKeywords Start");
+	REX::DEBUG("GetKeywords Start");
 
 	if (keywordForm) {
 		ExtraInfoEntry* keywordsEntry;
@@ -458,5 +458,5 @@ void GetKeywords(ExtraInfoEntry* resultArray, RE::BGSKeywordForm* keywordForm)
 		resultArray->PushBack(keywordsEntry);
 	}
 
-	logger::debug("GetKeywords End");
+	REX::DEBUG("GetKeywords End");
 }

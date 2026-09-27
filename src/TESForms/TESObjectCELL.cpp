@@ -8,7 +8,7 @@
 
 void GetCellEntry(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 {
-	logger::debug("Starting GetCellEntry");
+	REX::DEBUG("Starting GetCellEntry");
 
 	RE::TESObjectCELL* cell = static_cast<RE::TESObjectCELL*>(baseForm);
 	if (cell) {
@@ -75,7 +75,7 @@ std::string GetCoordinateString(RE::TESObjectCELL* cell)
 
 void GetCurrentCellForWorldData(ExtraInfoEntry* resultArray, RE::PlayerCharacter* pc)
 {
-	logger::debug("Starting GetCurrentCellForWorldData");
+	REX::DEBUG("Starting GetCurrentCellForWorldData");
 
 	RE::TESObjectCELL* currentCell = pc->parentCell;
 

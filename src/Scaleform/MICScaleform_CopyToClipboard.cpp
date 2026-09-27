@@ -20,5 +20,5 @@ void MICScaleform_CopyToClipboard::Call(Params& a_params)
 	CloseClipboard();
 	GlobalFree(hg);
 
-	logger::debug("Copy op:", a_params.args[0].GetString());
+	REX::DEBUG("Copy op:", a_params.args[0].GetString());
 }

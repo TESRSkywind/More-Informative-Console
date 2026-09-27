@@ -8,7 +8,7 @@
 
 void GetArmorData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 {
-	logger::debug("Starting GetArmorData");
+	REX::DEBUG("Starting GetArmorData");
 
 	RE::TESObjectARMO* armor = static_cast<RE::TESObjectARMO*>(baseForm);
 
@@ -97,5 +97,5 @@ void GetArmorData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 		resultArray->PushBack(armorAddonsEntry);
 	}
 
-	logger::debug("Ending GetArmorData");
+	REX::DEBUG("Ending GetArmorData");
 }

@@ -7,7 +7,7 @@
 
 void ProcessRegionList(ExtraInfoEntry* resultArray, RE::BSExtraData* data)
 {
-	logger::debug("ProcessRegionList Start");
+	REX::DEBUG("ProcessRegionList Start");
 	RE::ExtraRegionList* extraRegionList = static_cast<RE::ExtraRegionList*>(data);
 
 	if (extraRegionList)
@@ -36,6 +36,6 @@ void ProcessRegionList(ExtraInfoEntry* resultArray, RE::BSExtraData* data)
 		resultArray->PushBack(regionsEntry);
 	}
 
-	logger::debug("ProcessRegionList End");
+	REX::DEBUG("ProcessRegionList End");
 }
 

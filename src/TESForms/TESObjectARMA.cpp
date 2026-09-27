@@ -8,7 +8,7 @@
 
 void GetArmaData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 {
-	logger::debug("GetArmaData: GetArmaData Start");
+	REX::DEBUG("GetArmaData: GetArmaData Start");
 
 	RE::TESObjectARMA* arma = static_cast<RE::TESObjectARMA*>(baseForm);
 
@@ -95,5 +95,5 @@ void GetArmaData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 		MICGlobals::minimizeFormDataRead = minimizeFormDataReadCurrentState;
 	}
 
-	logger::debug("GetArmaData: GetArmaData End");
+	REX::DEBUG("GetArmaData: GetArmaData End");
 }

@@ -10,7 +10,7 @@ void ProcessEnableParentInformation(ExtraInfoEntry* resultArray, RE::BSExtraData
 {
 	RE::ExtraEnableStateParent* enableParentInformation = static_cast<RE::ExtraEnableStateParent*>(data);
 
-	logger::debug("Starting ProcessEnableParentInformation");
+	REX::DEBUG("Starting ProcessEnableParentInformation");
 	ExtraInfoEntry* enableParentEntry;
 
 	CreateExtraInfoEntry(enableParentEntry, GetTranslation("$ReferenceEnableParent"), "", priority_Reference_ExtraData_EnableParent);
@@ -43,5 +43,5 @@ void ProcessEnableParentInformation(ExtraInfoEntry* resultArray, RE::BSExtraData
 
 	resultArray->PushBack(enableParentEntry);
 
-	logger::debug("Ending ProcessEnableParentInformation");
+	REX::DEBUG("Ending ProcessEnableParentInformation");
 }

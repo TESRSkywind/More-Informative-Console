@@ -6,7 +6,7 @@
 
 void AddModelEntry(ExtraInfoEntry* resultArray, std::string modelType, RE::TESModel* model, priority priority)
 {
-	logger::debug("Starting AddModelEntry for model");
+	REX::DEBUG("Starting AddModelEntry for model");
 
 	if (model) {
 		std::string modelPath = model->GetModel();
@@ -14,20 +14,20 @@ void AddModelEntry(ExtraInfoEntry* resultArray, std::string modelType, RE::TESMo
 		CreateExtraInfoEntry(modelPathEntry, modelType, modelPath, priority);
 		resultArray->PushBack(modelPathEntry);
 		
-		logger::debug("Ending AddModelEntry for model");
+		REX::DEBUG("Ending AddModelEntry for model");
 		/*
 		if (modelPath != "") {
-			logger::debug("Get Model path");
+			REX::DEBUG("Get Model path");
 
 			std::string modelName = GetFileName(modelPath);
 
-			logger::debug("Get Model name");
+			REX::DEBUG("Get Model name");
 
 			ExtraInfoEntry* modelEntry;
 			CreateExtraInfoEntry(modelEntry, modelType, modelName, priority);
 
 			//Create an entry for the model path
-			logger::debug("Splitting Model Path");
+			REX::DEBUG("Splitting Model Path");
 			
 			ExtraInfoEntry* modelPathEntry;
 			CreateExtraInfoEntry(modelPathEntry, GetTranslation("$ModelPath"), "", priority_Model);
@@ -36,14 +36,14 @@ void AddModelEntry(ExtraInfoEntry* resultArray, std::string modelType, RE::TESMo
 			CreateFilePathSubarray(modelPathEntry, modelPath);
 			modelEntry->PushBack(modelPathEntry);
 
-			logger::debug("Done Splitting Model Path");
+			REX::DEBUG("Done Splitting Model Path");
 			
 			resultArray->PushBack(modelEntry);
 
 			RE::TESDataHandler* handler = RE::TESDataHandler::GetSingleton();
 
-			logger::debug(IntToString( handler->compiledFileCollection.smallFiles.size()).c_str() ) ;
-			//logger::debug(IntToString(handler->files.end).c_str());
+			REX::DEBUG(IntToString( handler->compiledFileCollection.smallFiles.size()).c_str() ) ;
+			//REX::DEBUG(IntToString(handler->files.end).c_str());
 		}*/
 	}
 

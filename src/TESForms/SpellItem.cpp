@@ -10,7 +10,7 @@ void GetSpellData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 {
 	RE::SpellItem* spellItem = static_cast<RE::SpellItem*>(baseForm);
 	if (spellItem) {
-		logger::debug("GetSpellData: Starting spell item code");
+		REX::DEBUG("GetSpellData: Starting spell item code");
 
 		//spell type
 		ExtraInfoEntry* spellTypeEntry;
@@ -36,6 +36,6 @@ void GetSpellData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 		CreateExtraInfoEntry(castTimeEntry, GetTranslation("$CastTime"), FloatToString(spellItem->data.chargeTime), priority_Spell_DeliveryType);
 		resultArray->PushBack(castTimeEntry);
 
-		logger::debug("GetSpellData: Ending spell item code");
+		REX::DEBUG("GetSpellData: Ending spell item code");
 	}
 }

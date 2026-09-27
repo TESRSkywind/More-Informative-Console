@@ -19,7 +19,7 @@ void TranslationCache::CacheTranslations()
 	SI_Error iniError = ini.LoadFile(path);
 
 	if (iniError < 0) {
-		logger::info("Unable to read the translation file");
+		REX::INFO("Unable to read the translation file");
 	}
 	else
 	{
@@ -55,7 +55,7 @@ std::string TranslationCache::GetTranslation(std::string key)
 
 	if (translation == "")
 	{
-		logger::info("Translation Key {} not found", key);
+		REX::INFO("Translation Key {} not found", key);
 	}
 
 	return translation;

@@ -36,7 +36,7 @@ void GetQuestInformation(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 		ExtraInfoEntry* aliasesEntry;
 		CreateExtraInfoEntry(aliasesEntry, GetTranslation("$Aliases"), "", priorty_Aliases);
 		
-		logger::debug("GetQuestInformation: Starting Aliases");
+		REX::DEBUG("GetQuestInformation: Starting Aliases");
 
 		for (std::uint32_t i = 0; i < quest->aliases.size(); i++) 
 		{
@@ -56,7 +56,7 @@ void GetQuestInformation(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 			}
 		}
 
-		logger::debug("GetQuestInformation: Ending Aliases");
+		REX::DEBUG("GetQuestInformation: Ending Aliases");
 
 		resultArray->PushBack(aliasesEntry);
 	}

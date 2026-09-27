@@ -20,11 +20,11 @@ void readINI()
 	SI_Error iniError = ini.LoadFile(path);
 
 	if (iniError < 0) {
-		logger::info("Unable to read the ini file. Default values will be used");
+		REX::INFO("Unable to read the ini file. Default values will be used");
 	}
 
 	else {
-		logger::info("Reading in ini file");
+		REX::INFO("Reading in ini file");
 		MICOptions::MICDebugMode = ini.GetBoolValue("Debug", "EnableDebugLogging", false);
 		MICOptions::ExperimentalFeatures = ini.GetBoolValue("Experimental", "EnableExperimentalFeatures", false);
 		MICOptions::Transparency = (double)ini.GetLongValue("UI", "Transparency", false) / 100.0;
@@ -42,11 +42,11 @@ void readINI()
 
 void MessageHandler(SKSE::MessagingInterface::Message* a_message)
 {
-	logger::info("Processed message");
+	REX::INFO("Processed message");
 	if (a_message->type == SKSE::MessagingInterface::kDataLoaded) {
 		auto editorIDCache = EditorIDCache::GetSingleton();
 		editorIDCache->CacheEditorIDs();
-		logger::info("Cached editor ids");
+		REX::INFO("Cached editor ids");
 	}
 }
 
@@ -58,20 +58,20 @@ extern "C" DLLEXPORT constinit auto SKSEPlugin_Version = []() {
 	v.AuthorName("Linthar");
 	v.UsesUpdatedStructs();
 	v.UsesAddressLibrary();
-	v.CompatibleVersions({ SKSE::RUNTIME_LATEST });
+	v.CompatibleVersions({ SKSE::RUNTIME_SSE_LATEST });
 
 	return v;
 }();
 #else
 
-extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info)
+extern "C" DLLEXPORT bool SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info)
 {
 	a_info->infoVersion = SKSE::PluginInfo::kVersion;
 	a_info->name = Version::PROJECT.data();
 	a_info->version = Version::MAJOR;
 
 	if (a_skse->IsEditor()) {
-		logger::critical("Loaded in editor, marking as incompatible"sv);
+		REX::CRITICAL("Loaded in editor, marking as incompatible"sv);
 		return false;
 	}
 
@@ -83,7 +83,7 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a
 		SKSE::RUNTIME_VR_1_4_15
 #endif
 	) {
-		logger::critical(FMT_STRING("Unsupported runtime version {}"sv), ver.string());
+		REX::CRITICAL("Unsupported runtime version {}", ver.string());
 		return false;
 	}
 
@@ -91,7 +91,7 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a
 }
 #endif
 
-extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_skse)
+extern "C" DLLEXPORT bool SKSEPlugin_Load(const SKSE::LoadInterface* a_skse)
 {
 	readINI();
 
@@ -103,7 +103,7 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_s
 	}
 	else
 	{
-		auto path = logger::log_directory();
+		auto path = SKSE::log::log_directory();
 		if (!path)
 		{
 			return false;
@@ -133,23 +133,23 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_s
 	spdlog::set_default_logger(std::move(log));
 	spdlog::set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%n] [%l] [%t] [%s:%#] %v");
 
-	logger::info(FMT_STRING("{} v{}"), Version::PROJECT, Version::NAME);
-	logger::info("Initalizing");
+	REX::INFO("{} v{}", Version::PROJECT, Version::NAME);
+	REX::INFO("Initalizing");
 
 	if (a_skse->IsEditor())
 	{
-		logger::critical("Loaded in editor, marking as incompatible");
+		REX::CRITICAL("Loaded in editor, marking as incompatible");
 		return false;
 	}
 
-	logger::info("Before Translation");
+	REX::INFO("Before Translation");
 
 	auto translationCache = TranslationCache::GetSingleton();
 	translationCache->CacheTranslations();
 
-	logger::info("Establishing interfaces...");
+	REX::INFO("Establishing interfaces...");
 
-	SKSE::Init(a_skse);
+	SKSE::Init(a_skse, { .log = false });
 	const auto scaleform = SKSE::GetScaleformInterface();
 
 	scaleform->Register(moreInformativeConsoleScaleForm::InstallHooks, "MIC");
@@ -159,7 +159,7 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_s
 		auto messaging = SKSE::GetMessagingInterface();
 		messaging->RegisterListener(MessageHandler);
 	}
-	logger::info("Plugin Initialization complete.");
+	REX::INFO("Plugin Initialization complete.");
 
 	return true;
 }

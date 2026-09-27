@@ -10,7 +10,7 @@
 
 void MICScaleform_GetReferenceInfo::Call(Params& a_params)
 {
-	logger::debug("GetReferenceInfo: Called");
+	REX::DEBUG("GetReferenceInfo: Called");
 
 	//Retrieve the various scaleform objects needed from the parameters
 	RE::GFxValue* results = a_params.retVal;
@@ -20,13 +20,13 @@ void MICScaleform_GetReferenceInfo::Call(Params& a_params)
 
 	RE::TESObjectREFR* ref = RE::Console::GetSelectedRef().get();
 	if (ref != nullptr) {
-		logger::debug("GetReferenceInfo: ref found");
+		REX::DEBUG("GetReferenceInfo: ref found");
 
 		//Get the associated base form
 		RE::TESBoundObject* baseForm = ref->data.objectReference;
 
 		if (baseForm != nullptr) {
-			logger::debug("GetReferenceInfo: baseForm found");
+			REX::DEBUG("GetReferenceInfo: baseForm found");
 
 			//If we found both the base form and the reference form we can start retrieving the necessary information.
 
@@ -50,7 +50,7 @@ void MICScaleform_GetReferenceInfo::Call(Params& a_params)
 			RegisterString(results, movie, "referenceName", referenceName);
 
 			//Get the location info  the reference was defined in
-			logger::debug("GetReferenceInfo: Getting refernce form location");
+			REX::DEBUG("GetReferenceInfo: Getting refernce form location");
 			std::string refDefinedIn = GetFirstFormLocationName(ref);
 			std::string refFormLastChangedBy = GetLastFormLocationName(ref);
 
@@ -83,5 +83,5 @@ void MICScaleform_GetReferenceInfo::Call(Params& a_params)
 		}
 	}
 
-	logger::debug("GetReferenceInfo: Finished");
+	REX::DEBUG("GetReferenceInfo: Finished");
 }

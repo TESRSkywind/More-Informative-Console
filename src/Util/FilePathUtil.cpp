@@ -25,7 +25,7 @@ std::string GetFileName(std::string filePath)
 
 void CreateFilePathSubarray(ExtraInfoEntry* mainEntry, std::string filePath)
 {
-	logger::debug("Starting CreateFilePathSubarray {}", filePath);
+	REX::DEBUG("Starting CreateFilePathSubarray {}", filePath);
 
 	//loop through the string until the last slash is found
 	long firstSlash = (long)filePath.find_first_of(deliminator);
@@ -47,5 +47,5 @@ void CreateFilePathSubarray(ExtraInfoEntry* mainEntry, std::string filePath)
 	mainEntry->PushBack(pathEntry);
 	mainEntry->disableSortingByName = true;
 
-	logger::debug("Ending CreateFilePathSubarray");
+	REX::DEBUG("Ending CreateFilePathSubarray");
 }

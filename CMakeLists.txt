@@ -22,7 +22,7 @@ macro(find_commonlib_path)
 	if (CommonLibName AND NOT ${CommonLibName} STREQUAL "")
 		# Check extern
 		find_path(CommonLibPath
-		include/REL/Relocation.h
+		include/RE/Skyrim.h
 		PATHS extern/${CommonLibName})
 		if (${CommonLibPath} STREQUAL "CommonLibPath-NOTFOUND")
 			#Check path
@@ -106,6 +106,7 @@ add_compile_definitions(
 )
 
 if (BUILD_SKYRIMAE)
+	set(SKYRIM_SUPPORT_AE ON CACHE BOOL "Enables support for Skyrim AE")
 	add_compile_definitions(
 		SKYRIM_SUPPORT_AE
 	)
