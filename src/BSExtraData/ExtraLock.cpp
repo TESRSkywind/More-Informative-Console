@@ -7,7 +7,7 @@
 
 void ProcessLockData(ExtraInfoEntry* resultArray, RE::BSExtraData* data, RE::TESObjectREFR* refForm)
 {
-	logger::debug("GetLockData");
+	REX::DEBUG("GetLockData");
 
 	RE::ExtraLock* extraLock = static_cast<RE::ExtraLock*>(data);
 
@@ -56,5 +56,5 @@ void ProcessLockData(ExtraInfoEntry* resultArray, RE::BSExtraData* data, RE::TES
 		resultArray->PushBack(lockEntry);
 	}
 
-	logger::debug("Ending GetLockData");
+	REX::DEBUG("Ending GetLockData");
 }

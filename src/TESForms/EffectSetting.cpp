@@ -11,12 +11,12 @@
 
 void GetMagicEffectData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 {
-	logger::debug("GetExtraData: GetMagicEffectData Start");
+	REX::DEBUG("GetExtraData: GetMagicEffectData Start");
 
 	RE::EffectSetting* effectSetting = static_cast<RE::EffectSetting*>(baseForm);
 
 	if (effectSetting) {
-		logger::debug("GetExtraData: GetMagicEffectData Cast succeeded");
+		REX::DEBUG("GetExtraData: GetMagicEffectData Cast succeeded");
 
 		//Magic School
 		int skill = (int)effectSetting->data.associatedSkill;
@@ -75,13 +75,13 @@ void GetMagicEffectData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 		CreateExtraInfoEntry(hostileEntry, GetTranslation("$FlagHostile"), hostile, priority_EffectSetting_Hostile);
 		resultArray->PushBack(hostileEntry);
 	}
-	logger::debug("GetExtraData: GetMagicEffectData End");
+	REX::DEBUG("GetExtraData: GetMagicEffectData End");
 }
 
 
 void GetEffectData(ExtraInfoEntry* resultArray, RE::Effect* effect, RE::Actor* caster, bool isFromActiveEffect, float durationFloat, float elapsedTime, bool isActive, float magnitude )
 {
-	logger::debug("GetEffectData Start");
+	REX::DEBUG("GetEffectData Start");
 
 	//Get data for the actual effect
 	RE::EffectSetting* effectSetting = effect->baseEffect;
@@ -167,7 +167,7 @@ void GetEffectData(ExtraInfoEntry* resultArray, RE::Effect* effect, RE::Actor* c
 
 void GetActiveEffectData(ExtraInfoEntry* resultArray, RE::ActiveEffect* activeEffect)
 {
-	logger::debug("EffectSetting: Active Effect MGEF found");
+	REX::DEBUG("EffectSetting: Active Effect MGEF found");
 
 	std::string effectActive;
 

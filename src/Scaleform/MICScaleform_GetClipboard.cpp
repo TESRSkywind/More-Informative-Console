@@ -35,7 +35,7 @@ void MICScaleform_GetClipboard::Call(Params& a_params)
 	}
 
 	movie->CreateString(results, text.c_str());
-	logger::debug("Paste op:", text);
+	REX::DEBUG("Paste op:", text);
 }
 
 

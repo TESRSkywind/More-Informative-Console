@@ -213,7 +213,7 @@ std::string GetFormTypeName(int formType)
 
 std::string GetName(RE::TESForm* baseForm, RE::TESObjectREFR* refForm )
 {
-	logger::debug("GetExtraData: GetName Start");
+	REX::DEBUG("GetExtraData: GetName Start");
 
 	std::string name = "";
 
@@ -241,7 +241,7 @@ std::string GetName(RE::TESForm* baseForm, RE::TESObjectREFR* refForm )
 				{
 					case RE::FormType::Race:
 					{
-						logger::debug("GetExtraData: GetName Race");
+						REX::DEBUG("GetExtraData: GetName Race");
 						RE::TESRace* race = static_cast<RE::TESRace*>(baseForm);
 						if (race)
 						{
@@ -253,7 +253,7 @@ std::string GetName(RE::TESForm* baseForm, RE::TESObjectREFR* refForm )
 
 					case RE::FormType::MusicType:
 					{
-						logger::debug("GetExtraData: GetName MusicTrack");
+						REX::DEBUG("GetExtraData: GetName MusicTrack");
 						RE::BGSMusicType* musicType = static_cast<RE::BGSMusicType*>(baseForm);
 						if (musicType)
 						{
@@ -265,7 +265,7 @@ std::string GetName(RE::TESForm* baseForm, RE::TESObjectREFR* refForm )
 
 					case RE::FormType::Keyword:
 					{
-						logger::debug("GetExtraData: GetName Keyword");
+						REX::DEBUG("GetExtraData: GetName Keyword");
 						RE::BGSKeyword* keyword = static_cast<RE::BGSKeyword*>(baseForm);
 						if (keyword)
 						{
@@ -277,7 +277,7 @@ std::string GetName(RE::TESForm* baseForm, RE::TESObjectREFR* refForm )
 
 					case RE::FormType::VoiceType:
 					{
-						logger::debug("GetExtraData: GetName VoiceType");
+						REX::DEBUG("GetExtraData: GetName VoiceType");
 						RE::BGSVoiceType* voiceType = static_cast<RE::BGSVoiceType*>(baseForm);
 						if (voiceType)
 						{
@@ -291,7 +291,7 @@ std::string GetName(RE::TESForm* baseForm, RE::TESObjectREFR* refForm )
 					case RE::FormType::ActorCharacter:
 					case RE::FormType::Reference:
 					{
-						logger::debug("GetExtraData: GetName Reference");
+						REX::DEBUG("GetExtraData: GetName Reference");
 						RE::TESObjectREFR* objectReference = static_cast<RE::TESObjectREFR*>(baseForm);
 					
 						if (objectReference
@@ -324,7 +324,7 @@ std::string GetName(RE::TESForm* baseForm, RE::TESObjectREFR* refForm )
 			}
 		}
 	}
-	logger::debug("GetExtraData: GetName End: {}", name);
+	REX::DEBUG("GetExtraData: GetName End: {}", name);
 	
 	return name;
 }

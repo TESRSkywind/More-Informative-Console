@@ -26,7 +26,7 @@ RE::TESBoundObject* GetRootTemplate(RE::TESForm* baseForm)
 
 void GetCharacterData(ExtraInfoEntry* resultArray, RE::TESForm* refForm, RE::TESForm* baseForm)
 {
-	logger::debug("GetCharacterData: GetCharacter info start");
+	REX::DEBUG("GetCharacterData: GetCharacter info start");
 
 	//Get all of the various objects we need
 	RE::Actor* actor = nullptr;
@@ -46,9 +46,9 @@ void GetCharacterData(ExtraInfoEntry* resultArray, RE::TESForm* refForm, RE::TES
 
 	if (npc) {
 		if (actorBase) {
-			logger::debug("GetCharacterData: GetCharacter info casts worked");
+			REX::DEBUG("GetCharacterData: GetCharacter info casts worked");
 
-			logger::debug("GetCharacterData: Starting Race");
+			REX::DEBUG("GetCharacterData: Starting Race");
 
 			//Handle Race
 			ExtraInfoEntry* raceEntry;
@@ -66,7 +66,7 @@ void GetCharacterData(ExtraInfoEntry* resultArray, RE::TESForm* refForm, RE::TES
 
 			resultArray->PushBack(raceEntry);
 
-			logger::debug("GetCharacterData: Ending Race");
+			REX::DEBUG("GetCharacterData: Ending Race");
 
 			//Handle Voice Data
 			GetVoiceData(resultArray, actorBase);
@@ -91,12 +91,12 @@ void GetCharacterData(ExtraInfoEntry* resultArray, RE::TESForm* refForm, RE::TES
 		}
 	}
 
-	logger::debug("GetExtraData: GetCharacter End");
+	REX::DEBUG("GetExtraData: GetCharacter End");
 }
 
 void GetVoiceData(ExtraInfoEntry* resultArray, RE::TESActorBase* actorBase)
 {
-	logger::debug("GetVoiceData: Starting Voice Data");
+	REX::DEBUG("GetVoiceData: Starting Voice Data");
 
 	if (actorBase)
 	{
@@ -115,7 +115,7 @@ void GetVoiceData(ExtraInfoEntry* resultArray, RE::TESActorBase* actorBase)
 		resultArray->PushBack(voiceEntry);
 	}
 
-	logger::debug("GetCharacterData:  Done with voice data");
+	REX::DEBUG("GetCharacterData:  Done with voice data");
 }
 
 void GetSpellsForNPC(ExtraInfoEntry* resultArray, RE::Actor* actor, RE::TESActorBase* actorBase)
@@ -125,7 +125,7 @@ void GetSpellsForNPC(ExtraInfoEntry* resultArray, RE::Actor* actor, RE::TESActor
 
 	CreateExtraInfoEntry(allSpellsEntry, GetTranslation("$Spells"), "", priority_Actor_Spells);
 
-	logger::debug("GetSpellsForNPC: Starting Added Spells");
+	REX::DEBUG("GetSpellsForNPC: Starting Added Spells");
 
 	if (actor) {
 		int numberOfAddedSpells = actor->addedSpells.size();
@@ -149,7 +149,7 @@ void GetSpellsForNPC(ExtraInfoEntry* resultArray, RE::Actor* actor, RE::TESActor
 		}
 	}
 
-	logger::debug("GetSpellsForNPC: Starting Base Spells");
+	REX::DEBUG("GetSpellsForNPC: Starting Base Spells");
 
 	if (actorBase->actorEffects) {
 		//Actor Base Spells
@@ -175,7 +175,7 @@ void GetSpellsForNPC(ExtraInfoEntry* resultArray, RE::Actor* actor, RE::TESActor
 
 	resultArray->PushBack(allSpellsEntry);
 
-	logger::debug("GetCharacterData:  Done with spells");
+	REX::DEBUG("GetCharacterData:  Done with spells");
 }
 
 void GetActorData(ExtraInfoEntry* resultArray, RE::Actor* actor)
@@ -187,13 +187,13 @@ void GetActorData(ExtraInfoEntry* resultArray, RE::Actor* actor)
 
 #ifndef SKYRIMVR
 	RE::BSSimpleList<RE::ActiveEffect*>* activeEffects = actor->GetActiveEffectList();
-	logger::debug("GetCharacterData: Active Effects Gotten");
+	REX::DEBUG("GetCharacterData: Active Effects Gotten");
 
 	if (activeEffects) {
 		RE::BSSimpleList<RE::ActiveEffect*>::iterator itrEnd = activeEffects->end();
 
 		for (RE::BSSimpleList<RE::ActiveEffect*>::iterator itr = activeEffects->begin(); itr != itrEnd; ++itr) {
-			logger::debug("GetCharacterData: Starting Active Effect");
+			REX::DEBUG("GetCharacterData: Starting Active Effect");
 
 			RE::ActiveEffect* activeEffect = *(itr);
 
@@ -209,20 +209,20 @@ void GetActorData(ExtraInfoEntry* resultArray, RE::Actor* actor)
 				activeEffectsEntry->PushBack(effectEntry);
 			}
 
-			logger::debug("GetCharacterData: Ending Active Effect");
+			REX::DEBUG("GetCharacterData: Ending Active Effect");
 		}
 	}
 #else
 	int total = 0;
-	logger::debug("GetCharacterData: Starting Active Effect");
-	//logger::debug("GetCharacterData Num Effects: " + actor->GetMagicTarget()->ForEachActiveEffect( RE::MagicTarget::GetEffectCount() );
+	REX::DEBUG("GetCharacterData: Starting Active Effect");
+	//REX::DEBUG("GetCharacterData Num Effects: " + actor->GetMagicTarget()->ForEachActiveEffect( RE::MagicTarget::GetEffectCount() );
 
 	actor->VisitActiveEffects([&](RE::ActiveEffect* activeEffect) -> RE::BSContainer::ForEachResult 
 	{
-		logger::debug("GetCharacterData: End Visiting Active Effects Total {}", total);
+		REX::DEBUG("GetCharacterData: End Visiting Active Effects Total {}", total);
 		if (activeEffect && activeEffect->effect) 
 		{
-			logger::debug("GetCharacterData: Active Effect MGEF found");
+			REX::DEBUG("GetCharacterData: Active Effect MGEF found");
 			GetActiveEffectData(activeEffectsEntry, activeEffect);
 		}
 		//This is only reached if there is an active effect without a actual corrosponding effect. Probally impossible but here's some code to handle it just in case
@@ -231,7 +231,7 @@ void GetActorData(ExtraInfoEntry* resultArray, RE::Actor* actor)
 			ExtraInfoEntry* effectEntry;
 			CreateExtraInfoEntry(effectEntry, GetTranslation("$UnknownEffectType"), "", priority_MagicItem_Effect);
 			activeEffectsEntry->PushBack(effectEntry);
-			logger::debug("GetCharacterData: Ending Active Effect");
+			REX::DEBUG("GetCharacterData: Ending Active Effect");
 		}
 		return RE::BSContainer::ForEachResult::kStop; //This looks wrong, but the version of CommonLibSSE I'm compiling against has the values of kStop and KContinue backwards.
 	});
@@ -240,7 +240,7 @@ void GetActorData(ExtraInfoEntry* resultArray, RE::Actor* actor)
 
 	resultArray->PushBack(activeEffectsEntry);
 
-	logger::debug("GetActorData: Active Effects Done");
+	REX::DEBUG("GetActorData: Active Effects Done");
 
 	//Add Health/Magicka/Stamina to the main subarray
 	GetActorValue(resultArray, actor, actorValueHealthIndex, priority_Actor_Health);
@@ -258,7 +258,7 @@ void GetActorData(ExtraInfoEntry* resultArray, RE::Actor* actor)
 
 	resultArray->PushBack(actorValueArray);
 
-	logger::debug("GetActorData: actor values gotten");
+	REX::DEBUG("GetActorData: actor values gotten");
 
 	RE::AIProcess* aiProcess = actor->currentProcess;
 
@@ -266,7 +266,7 @@ void GetActorData(ExtraInfoEntry* resultArray, RE::Actor* actor)
 		RE::TESForm* currentPackage = aiProcess->currentPackage.package;
 
 		if (currentPackage) {
-			logger::debug("GetActorData: Found current package");
+			REX::DEBUG("GetActorData: Found current package");
 
 			std::string packageName = GetName(currentPackage);
 
@@ -300,12 +300,12 @@ void GetActorData(ExtraInfoEntry* resultArray, RE::Actor* actor)
 
 	resultArray->PushBack(protectionEntry);
 
-	logger::debug("GetActorData: End");
+	REX::DEBUG("GetActorData: End");
 }
 
 void GetActorValue(ExtraInfoEntry* resultArray, RE::Actor* actor, int id, priority actorValuePriority)
 {
-	logger::debug("GetExtraData: GetActover Value Start");
+	REX::DEBUG("GetExtraData: GetActover Value Start");
 
 	RE::ActorValue actorValue = (RE::ActorValue)id;
 	ExtraInfoEntry* actorValueEntry;
@@ -333,13 +333,13 @@ void GetActorValue(ExtraInfoEntry* resultArray, RE::Actor* actor, int id, priori
 		resultArray->PushBack(actorValueEntry);
 	}
 
-	logger::debug("GetExtraData: GetActover Value End");
+	REX::DEBUG("GetExtraData: GetActover Value End");
 }
 
 void GetLevelData(ExtraInfoEntry* resultArray, RE::Actor* actor, RE::TESNPC* npc)
 {
 	//Level stuff
-	logger::debug("GetLevelData: Start");
+	REX::DEBUG("GetLevelData: Start");
 
 	if (actor) {
 		int level = actor->GetLevel();
@@ -356,7 +356,7 @@ void GetLevelData(ExtraInfoEntry* resultArray, RE::Actor* actor, RE::TESNPC* npc
 	CreateExtraInfoEntry(isPcLeveledEntry, GetTranslation("$LevelIsPcLevelMult"), BooleanToYesNoString(isLevelMult), priority_Actor_IsPCLeveleMult);
 
 	if (isLevelMult) {
-		logger::debug("GetLevelData: GetCharacter pc level mult");
+		REX::DEBUG("GetLevelData: GetCharacter pc level mult");
 
 		double levelMult = (double)npc->actorData.level / 1000.0;  //I don't know why the level mult is stored in memory as 1000 times what the value you'd see in TESEdit is, but this division is needed to fix that
 		int minLevel = npc->actorData.calcLevelMin;
@@ -376,7 +376,7 @@ void GetLevelData(ExtraInfoEntry* resultArray, RE::Actor* actor, RE::TESNPC* npc
 
 	resultArray->PushBack(isPcLeveledEntry);
 
-	logger::debug("GetLevelData: End");
+	REX::DEBUG("GetLevelData: End");
 }
 
 #ifdef SKYRIMVR
@@ -385,7 +385,7 @@ void GetLevelData(ExtraInfoEntry* resultArray, RE::Actor* actor, RE::TESNPC* npc
 
 void GetPerksForNPC(ExtraInfoEntry* resultArray, RE::TESActorBase* actorBase, RE::PlayerCharacter* player)
 {
-	logger::debug("Starting GetPerks");
+	REX::DEBUG("Starting GetPerks");
 	int numPerks = actorBase->perkCount;
 
 	ExtraInfoEntry* perks;
@@ -409,7 +409,7 @@ void GetPerksForNPC(ExtraInfoEntry* resultArray, RE::TESActorBase* actorBase, RE
 
 #ifndef SKYRIMVR  // player->addedPerks isn't an iteratable in VR and is still undiscovered
 	if (player != nullptr) {
-		logger::debug(" GetPerks: Starting Player Perks ");
+		REX::DEBUG(" GetPerks: Starting Player Perks ");
 		int numPlayerPerks = player->addedPerks.size();
 
 		for (int i = 0; i < numPlayerPerks; i++) {
@@ -432,13 +432,13 @@ void GetPerksForNPC(ExtraInfoEntry* resultArray, RE::TESActorBase* actorBase, RE
 
 	resultArray->PushBack(perks);
 
-	logger::debug("Ending GetPerks");
+	REX::DEBUG("Ending GetPerks");
 }
 
 void GetNPCAppearanceData(ExtraInfoEntry* resultArray, RE::TESNPC* npc)
 {
 	//apperance - currently height and weight
-	logger::debug("GetNPCAppearanceData Started");
+	REX::DEBUG("GetNPCAppearanceData Started");
 
 	ExtraInfoEntry* appearance;
 	CreateExtraInfoEntry(appearance, GetTranslation("$Appearance"), "", priority_Actor_Appearance);
@@ -459,12 +459,12 @@ void GetNPCAppearanceData(ExtraInfoEntry* resultArray, RE::TESNPC* npc)
 
 	resultArray->PushBack(appearance);
 
-	logger::debug("GetNPCAppearanceData Ended");
+	REX::DEBUG("GetNPCAppearanceData Ended");
 }
 
 void GetFactionsForNPC(ExtraInfoEntry* resultArray, RE::Actor* actor, RE::TESActorBase* actorBase)
 {
-	logger::debug("GetFactionsForNPC start");
+	REX::DEBUG("GetFactionsForNPC start");
 
 	ExtraInfoEntry* factionsEntry;
 

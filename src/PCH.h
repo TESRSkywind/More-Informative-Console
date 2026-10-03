@@ -2,6 +2,7 @@
 
 #include "RE/Skyrim.h"
 #include "SKSE/SKSE.h"
+#include <spdlog/spdlog.h>
 #include <Util/GeneralUtil.h>
 #include <robin_hood.h>
 
@@ -15,7 +16,7 @@
 
 using namespace std::literals;
 
-namespace logger = SKSE::log;
+
 
 #define DLLEXPORT __declspec(dllexport)
 

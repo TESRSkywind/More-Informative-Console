@@ -17,7 +17,7 @@
 
 void MICScaleform_GetExtraData::Call(Params& a_params)
 {
-	logger::debug("GetExtraData: Invoke Start");
+	REX::DEBUG("GetExtraData: Invoke Start");
 
 	RE::GFxMovie* movie = a_params.movie;
 
@@ -32,12 +32,12 @@ void MICScaleform_GetExtraData::Call(Params& a_params)
 	if (modeInt == Constant_ModeConsoleHandle) {
 		RE::TESObjectREFR* ref = RE::Console::GetSelectedRef().get();
 		if (ref != nullptr) {
-			logger::debug("GetExtraData: refFound");
+			REX::DEBUG("GetExtraData: refFound");
 
 			RE::TESBoundObject* baseForm = ref->data.objectReference;
 
 			if (baseForm != nullptr) {
-				logger::debug("GetExtraData: BaseFound");
+				REX::DEBUG("GetExtraData: BaseFound");
 
 				MICGlobals::rootEntry.Clear();
 				formExtraInfoCache->ClearCache();
@@ -52,10 +52,10 @@ void MICScaleform_GetExtraData::Call(Params& a_params)
 				{
 					auto end = std::chrono::high_resolution_clock::now();
 					auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-					logger::info("Runtime {} Microseconds", LongLongToString(duration.count()));
+					REX::INFO("Runtime {} Microseconds", LongLongToString(duration.count()));
 				}
 
-				logger::debug("Get Form Information done");
+				REX::DEBUG("Get Form Information done");
 			}
 		}
 	}
@@ -72,7 +72,7 @@ void MICScaleform_GetExtraData::Call(Params& a_params)
 
 		RE::TESObjectREFR* ref = RE::Console::GetSelectedRef().get();
 		if (ref != nullptr && ref->GetFormType() == RE::FormType::ActorCharacter) {
-			logger::debug("GetExtraData MFG: Character found");
+			REX::DEBUG("GetExtraData MFG: Character found");
 
 			skipUsualEndCode = true;  //We need to return the mfg information slightly differently from the other types of information so skip the usual end code
 
@@ -109,7 +109,7 @@ void MICScaleform_GetExtraData::Call(Params& a_params)
 			//Send the phenome
 			root.Invoke("AddExtraInfo", 0, &phenomeArray, 1);
 
-			logger::debug("Get MFG information done");
+			REX::DEBUG("Get MFG information done");
 		}
 
 		else {
@@ -136,7 +136,7 @@ void MICScaleform_GetExtraData::Call(Params& a_params)
 
 		root.Invoke("AddExtraInfo", 0, &resultArray, 1);
 
-		logger::debug("GetExtraData: Invoke End");
+		REX::DEBUG("GetExtraData: Invoke End");
 	}
 }
 
@@ -145,7 +145,7 @@ void GetWorldData(ExtraInfoEntry* resultArray)
 	RE::PlayerCharacter* pc = RE::PlayerCharacter::GetSingleton();
 
 	if (pc) {
-		logger::debug("Starting Worldspace");
+		REX::DEBUG("Starting Worldspace");
 
 		RE::TESWorldSpace* currentWorldSpace = pc->GetWorldspace();
 		;

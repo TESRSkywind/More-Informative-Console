@@ -10,13 +10,13 @@
 
 void GetRaceEntry(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 {
-	logger::debug("Starting GetRaceEntry");
+	REX::DEBUG("Starting GetRaceEntry");
 
 	RE::TESRace* race = static_cast<RE::TESRace*>(baseForm);
 	if (race) 
 	{
 
-		logger::debug("Getting Models");
+		REX::DEBUG("Getting Models");
 		//models
 		RE::TESModel* maleModelSkeleton = &(race->skeletonModels[RE::SEXES::kMale]);
 		RE::TESModel* femaleModelSkelelton = &(race->skeletonModels[RE::SEXES::kFemale]);
@@ -27,7 +27,7 @@ void GetRaceEntry(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 		//Get the skin for this race
 		//We need to check that MICGlobals::readRaceSkins is true, because the armor object will look at the Armature objects which will look at the races that the Armature applies too.
 		if ( race->skin != nullptr) {
-			logger::debug("Getting Skin");
+			REX::DEBUG("Getting Skin");
 			RE::TESObjectARMO* skin = race->skin;
 			std::string skinName = GetName(skin);
 
@@ -37,7 +37,7 @@ void GetRaceEntry(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 
 			resultArray->PushBack(skinEntry);
 
-			logger::debug("Done Getting Skin");
+			REX::DEBUG("Done Getting Skin");
 		}
 
 		//Handle Flags
@@ -54,5 +54,5 @@ void GetRaceEntry(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 		resultArray->PushBack(childEntry);
 	}
 
-	logger::debug("Ending GetRaceEntry");
+	REX::DEBUG("Ending GetRaceEntry");
 }

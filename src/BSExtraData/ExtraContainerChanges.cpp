@@ -44,7 +44,7 @@ void ProcessContainerChanges(ExtraInfoEntry* resultArray, RE::BSExtraData* data,
 
 void GetEquipment(ExtraInfoEntry* resultArray, RE::ExtraContainerChanges* containerChanges, RE::Actor* actor)
 {
-	logger::debug("GetEquipment Start");
+	REX::DEBUG("GetEquipment Start");
 
 	ExtraInfoEntry* equipmentEntry;
 
@@ -52,7 +52,7 @@ void GetEquipment(ExtraInfoEntry* resultArray, RE::ExtraContainerChanges* contai
 
 	//weapons and shouts
 
-	logger::debug("GetEquipment Left");
+	REX::DEBUG("GetEquipment Left");
 
 	//left hand
 	RE::InventoryEntryData* inventoryEntryData = nullptr;
@@ -82,7 +82,7 @@ void GetEquipment(ExtraInfoEntry* resultArray, RE::ExtraContainerChanges* contai
 	}
 
 
-	logger::debug("GetEquipment Right");
+	REX::DEBUG("GetEquipment Right");
 
 	//right hand
 	inventoryEntryData = nullptr;
@@ -128,7 +128,7 @@ void GetEquipment(ExtraInfoEntry* resultArray, RE::ExtraContainerChanges* contai
 	//check each equip slot
 	for (int i = 0; i < 32; i++)
 	{
-		logger::debug("GetEquipment: Starting EquipSlot item");
+		REX::DEBUG("GetEquipment: Starting EquipSlot item");
 
 		int mask = 1 << i;
 		inventoryEntryData = nullptr;
@@ -136,7 +136,7 @@ void GetEquipment(ExtraInfoEntry* resultArray, RE::ExtraContainerChanges* contai
 
 		if ( equipedItem )
 		{
-			logger::debug("GetEquipment: EquipSlot item Found");
+			REX::DEBUG("GetEquipment: EquipSlot item Found");
 
 			ExtraInfoEntry* equipedItemEntry;
 			std::string name = GetName(equipedItem);
@@ -155,17 +155,17 @@ void GetEquipment(ExtraInfoEntry* resultArray, RE::ExtraContainerChanges* contai
 
 		}
 
-		logger::debug("GetEquipment: Ending EquipSlot item");
+		REX::DEBUG("GetEquipment: Ending EquipSlot item");
 	}
 
 	resultArray->PushBack(equipmentEntry);
 
-	logger::debug("GetEquipment: GetEquipment End");
+	REX::DEBUG("GetEquipment: GetEquipment End");
 }
 
 RE::TESForm* FindEquipedItemInSlot( int slotMask, bool equipRight, bool equipLeft, RE::ExtraContainerChanges* containerChanges, RE::InventoryEntryData* & inventoryEntryDataForSlot )
 {
-	logger::debug("FindEquipedItemInSlot Start");
+	REX::DEBUG("FindEquipedItemInSlot Start");
 	RE::TESForm* equipedSlot = nullptr;
 	RE::InventoryChanges* inventoryChanges = containerChanges->changes;
 	RE::BSSimpleList<RE::InventoryEntryData*> ::iterator itr, itrEnd;
@@ -173,7 +173,7 @@ RE::TESForm* FindEquipedItemInSlot( int slotMask, bool equipRight, bool equipLef
 
 	for ( itr = inventoryChanges->entryList->begin(); itr != itrEnd; ++itr)
 	{
-		//logger::debug("FindEquipedItemInSlot Item found");
+		//REX::DEBUG("FindEquipedItemInSlot Item found");
 
 		RE::InventoryEntryData* inventoryEntryData = *itr;
 		RE::TESForm* item = inventoryEntryData->object;
@@ -182,13 +182,13 @@ RE::TESForm* FindEquipedItemInSlot( int slotMask, bool equipRight, bool equipLef
 			 && !equipLeft
 			 && item->GetFormType() == RE::FormType::Armor)
 		{
-			//logger::debug("FindEquipedItemInSlot Armor Found");
+			//REX::DEBUG("FindEquipedItemInSlot Armor Found");
 			RE::TESObjectARMO* armor = static_cast<RE::TESObjectARMO*>(item);
 
 			//Check if the armor is for the equip slot we're checking for
 			if (HasFlag(armor->bipedModelData.bipedObjectSlots.underlying(), slotMask) )
 			{
-				//logger::debug("FindEquipedItemInSlot Matching Slot Found");
+				//REX::DEBUG("FindEquipedItemInSlot Matching Slot Found");
 				
 				//If there is extra data associated with the item found
 				if (inventoryEntryData->extraLists)
@@ -239,7 +239,7 @@ RE::TESForm* FindEquipedItemInSlot( int slotMask, bool equipRight, bool equipLef
 		}
 	}
 
-	logger::debug("FindEquipedItemInSlot End");
+	REX::DEBUG("FindEquipedItemInSlot End");
 	
 	return equipedSlot;
 }
@@ -247,7 +247,7 @@ RE::TESForm* FindEquipedItemInSlot( int slotMask, bool equipRight, bool equipLef
 
 void GetInventory(ExtraInfoEntry* resultArray, RE::ExtraContainerChanges* containerChanges, RE::TESContainer* baseContainer)
 {
-	logger::debug("GetInventory: Start");
+	REX::DEBUG("GetInventory: Start");
 
 	ExtraInfoEntry* inventoryEntry;
 	CreateExtraInfoEntry(inventoryEntry, GetTranslation("$Inventory"), "", priority_ExtraContainerChanges_Inventory);
@@ -260,7 +260,7 @@ void GetInventory(ExtraInfoEntry* resultArray, RE::ExtraContainerChanges* contai
 
 	for ( itr = inventoryChanges->entryList->begin(); itr != itrEnd; ++itr)
 	{
-		//logger::debug("FindEquipedItemInSlot Item found");
+		//REX::DEBUG("FindEquipedItemInSlot Item found");
 
 		RE::InventoryEntryData* inventoryEntryData = *itr;
 		RE::TESForm* item = inventoryEntryData->object;
@@ -286,7 +286,7 @@ void GetInventory(ExtraInfoEntry* resultArray, RE::ExtraContainerChanges* contai
 			inventoryEntry->PushBack(inventoryItemEntry);
 		}
 
-			//logger::debug("GetInventory: Ending inventory item");
+			//REX::DEBUG("GetInventory: Ending inventory item");
 	}
 	
 	//go through the items in the base form
@@ -325,12 +325,12 @@ void GetInventory(ExtraInfoEntry* resultArray, RE::ExtraContainerChanges* contai
 
 	resultArray->PushBack(inventoryEntry);
 
-	logger::debug("GetInventory: End");
+	REX::DEBUG("GetInventory: End");
 }
 
 int GetNumberOfItemInContainer(RE::TESContainer* container, RE::TESForm* item)
 {
-	logger::debug("GetNumberOfItemInContainer: Start");
+	REX::DEBUG("GetNumberOfItemInContainer: Start");
 
 	int count = 0;
 
@@ -344,7 +344,7 @@ int GetNumberOfItemInContainer(RE::TESContainer* container, RE::TESForm* item)
 		}
 	}
 
-	logger::debug("GetNumberOfItemInContainer: End");
+	REX::DEBUG("GetNumberOfItemInContainer: End");
 
 	return count;
 }
@@ -352,7 +352,7 @@ int GetNumberOfItemInContainer(RE::TESContainer* container, RE::TESForm* item)
 
 bool InventoryChangesContainsItem(RE::InventoryChanges* inventoryChanges, RE::TESForm* item)
 {
-	logger::debug("InventoryChangesContainsItem Start");
+	REX::DEBUG("InventoryChangesContainsItem Start");
 
 	bool containsItem = false;
 	RE::BSSimpleList<RE::InventoryEntryData*>::iterator itr, itrEnd;
@@ -362,7 +362,7 @@ bool InventoryChangesContainsItem(RE::InventoryChanges* inventoryChanges, RE::TE
 	while( itr != itrEnd
 		   && !containsItem )
 	{
-		//logger::debug("FindEquipedItemInSlot Item found");
+		//REX::DEBUG("FindEquipedItemInSlot Item found");
 
 		RE::InventoryEntryData* inventoryEntryData = *itr;
 		RE::TESForm* itemInInventory = inventoryEntryData->object;
@@ -375,7 +375,7 @@ bool InventoryChangesContainsItem(RE::InventoryChanges* inventoryChanges, RE::TE
 		++itr;
 	}
 
-	logger::debug("InventoryChangesContainsItem End");
+	REX::DEBUG("InventoryChangesContainsItem End");
 
 	return containsItem;
 }

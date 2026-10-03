@@ -7,5 +7,5 @@
 
 void MICScaleform_Log::Call(Params& a_params)
 {
-	logger::debug("{}", a_params.args[0].GetString());
+	REX::DEBUG("{}", a_params.args[0].GetString());
 }

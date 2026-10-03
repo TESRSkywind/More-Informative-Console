@@ -8,7 +8,7 @@
 
 void ProcessOwnership(ExtraInfoEntry* resultArray, RE::BSExtraData* data )
 {
-	logger::debug("Starting ProcessOwnership");
+	REX::DEBUG("Starting ProcessOwnership");
 
 	RE::ExtraOwnership* ownershipData = static_cast<RE::ExtraOwnership*>(data);
 
@@ -34,5 +34,5 @@ void ProcessOwnership(ExtraInfoEntry* resultArray, RE::BSExtraData* data )
 
 	}
 
-	logger::debug("Ending ProcessOwnership");
+	REX::DEBUG("Ending ProcessOwnership");
 }

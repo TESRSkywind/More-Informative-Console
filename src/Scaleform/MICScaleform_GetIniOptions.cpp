@@ -8,7 +8,7 @@
 
 void MICScaleform_GetIniOptions::Call(Params& a_params)
 {
-	logger::debug("GetIniOptions:: Called");
+	REX::DEBUG("GetIniOptions:: Called");
 
 	//Retrieve the various scaleform objects needed from the parameters
 	RE::GFxValue* results = a_params.retVal;

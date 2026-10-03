@@ -23,7 +23,7 @@ MICScaleform_LaunchExt* launchExt = nullptr;
 //// core hook
 bool moreInformativeConsoleScaleForm::InstallHooks(RE::GFxMovieView* a_view, RE::GFxValue*)
 {
-	logger::debug("Install Hooks Called");
+	REX::DEBUG("Install Hooks Called");
 
 	if (getReferenceInfo == nullptr) {
 		getReferenceInfo = new MICScaleform_GetReferenceInfo;
@@ -61,7 +61,7 @@ bool moreInformativeConsoleScaleForm::InstallHooks(RE::GFxMovieView* a_view, RE:
 
 	RE::GFxValue globals;
 
-	logger::debug("{}", a_view->GetMovieDef()->GetFileURL());
+	REX::DEBUG("{}", a_view->GetMovieDef()->GetFileURL());
 	bool result = a_view->GetVariable(&globals, "_global");
 	if (result) {
 
@@ -111,14 +111,14 @@ bool moreInformativeConsoleScaleForm::InstallHooks(RE::GFxMovieView* a_view, RE:
 
 #ifdef SKYRIM_AE
 	// We will have to disable the handling for Ctrl Keydown event in the base console
-	REL::Relocation<std::uintptr_t> consoleHandleCtrl{ REL::ID(442669), 0x57D};
+	REL::Relocation<std::uintptr_t> consoleHandleCtrl{ REL::ID(442669), 0x59D};
 
 	/*
 		Skip handling this event altogether with an unconditional jump
 		jnz 0x91 -> jmp 0x91
 	*/
 	std::uint8_t patch[6] = { 0x48, 0xE9, 0x8B, 0x00, 0x00, 0x00 };
-	REL::safe_write<uint8_t>(consoleHandleCtrl.address(), patch);
+	REL::WriteSafe(consoleHandleCtrl.address(), patch, sizeof(patch));
 #endif  // SKYRIM_AE
 
 

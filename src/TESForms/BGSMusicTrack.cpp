@@ -11,7 +11,7 @@ void GetCurrentMusic(ExtraInfoEntry* resultArray)
 
 	if (dataHandler)
 	{
-		logger::debug("Starting Music");
+		REX::DEBUG("Starting Music");
 
 		RE::BSTArray<RE::TESForm*>* musicTypeArray = &(dataHandler->GetFormArray(RE::FormType::MusicType));
 
@@ -61,7 +61,7 @@ void GetCurrentMusic(ExtraInfoEntry* resultArray)
 			GetFormData(musicTypeEntry, currentPriorityType, nullptr);
 			resultArray->PushBack(musicTypeEntry);
 
-			logger::debug("Found a track playing. Checking music tracks to find specific form");
+			REX::DEBUG("Found a track playing. Checking music tracks to find specific form");
 			//now loop through the actual tracks to find the track that matches the track we found in the previous step
 			RE::BSTArray<RE::TESForm*>* musicTrackArray = &(dataHandler->GetFormArray(RE::FormType::MusicTrack));
 

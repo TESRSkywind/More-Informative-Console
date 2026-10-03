@@ -10,7 +10,7 @@
 
 void GetScripts(ExtraInfoEntry* resultArray, RE::TESForm* baseForm, RE::TESObjectREFR* refForm)
 {
-	logger::debug("GetScript start");
+	REX::DEBUG("GetScript start");
 
 	//if getting scripts is allowed
 	if (!MICOptions::DisableScriptsAliases 
@@ -38,13 +38,13 @@ void GetScripts(ExtraInfoEntry* resultArray, RE::TESForm* baseForm, RE::TESObjec
 						if (actor) {
 #ifndef SKYRIMVR
 							RE::BSSimpleList<RE::ActiveEffect*>* activeEffects = actor->GetActiveEffectList();
-							logger::debug("GetScripts: Active Effects Gotten");
+							REX::DEBUG("GetScripts: Active Effects Gotten");
 
 							if (activeEffects) {
 								RE::BSSimpleList<RE::ActiveEffect*>::iterator itrEnd = activeEffects->end();
 
 								for (RE::BSSimpleList<RE::ActiveEffect*>::iterator itr = activeEffects->begin(); itr != itrEnd; ++itr) {
-									//logger::debug("GetCharacterData: Starting Active Effect");
+									//REX::DEBUG("GetCharacterData: Starting Active Effect");
 
 									RE::ActiveEffect* activeEffect = *(itr);
 									auto handleActiveEffect = policy->GetHandleForObject(RE::ActiveEffect::VMTYPEID, activeEffect);
@@ -54,10 +54,10 @@ void GetScripts(ExtraInfoEntry* resultArray, RE::TESForm* baseForm, RE::TESObjec
 #else
 							
 							int total = 0;
-							logger::debug("GetScripts: Starting Active Effect");
+							REX::DEBUG("GetScripts: Starting Active Effect");
 
 							actor->VisitActiveEffects([&](RE::ActiveEffect* activeEffect) -> RE::BSContainer::ForEachResult {
-								logger::debug("GetScripts: Visiting Active Effect {}", total++);
+								REX::DEBUG("GetScripts: Visiting Active Effect {}", total++);
 								if (activeEffect) {
 									auto handleActiveEffect = policy->GetHandleForObject(RE::ActiveEffect::VMTYPEID, activeEffect);
 									GetScriptsForHandle(resultArray, vm, policy, handleActiveEffect, nullptr, activeEffect, nullptr);
@@ -88,7 +88,7 @@ void GetScripts(ExtraInfoEntry* resultArray, RE::TESForm* baseForm, RE::TESObjec
 		}
 	}
 	
-	logger::debug("GetScript End");
+	REX::DEBUG("GetScript End");
 }
 
 void GetScriptsForHandle(ExtraInfoEntry* resultArray, RE::BSScript::Internal::VirtualMachine* vm, RE::BSScript::IObjectHandlePolicy* policy, RE::VMHandle handle, RE::TESForm* form, RE::ActiveEffect* activeEffect, const RE::BGSBaseAlias* alias )
@@ -109,7 +109,7 @@ void GetScriptsForHandle(ExtraInfoEntry* resultArray, RE::BSScript::Internal::Vi
 
 				std::string scriptName = script->type->name.c_str();
 				//std::string scriptName = script->type->G
-				logger::debug("Found Script {}", scriptName );
+				REX::DEBUG("Found Script {}", scriptName );
 
 				if (GetShouldDisplayScript(scriptName))
 				{
@@ -204,7 +204,7 @@ void GetVariablesAndPropertiesForScript(ExtraInfoEntry* resultArray, RE::BSScrip
 	{
 		objectTypeInfo = objectTypeInfoStack.top();
 		objectTypeInfoStack.pop();
-		logger::debug("{}", objectTypeInfo->GetName());
+		REX::DEBUG("{}", objectTypeInfo->GetName());
 		
 		const auto vars = objectTypeInfo->GetVariableIter();
 		if (vars) {
@@ -301,7 +301,7 @@ std::string GetVariableValue(ExtraInfoEntry* resultArray, RE::BSScript::Variable
 				} 
 				else 
 				{
-					//logger::info("Type Found");
+					//REX::INFO("Type Found");
 
 					form = static_cast<RE::TESForm*>(object->Resolve(0));  //0 seems to always resolve regardless of the handle type
 					RE::TESObjectREFR* refForm = form ? form->As<RE::TESObjectREFR>() : nullptr;

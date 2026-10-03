@@ -12,7 +12,7 @@
 
 void MICScaleform_GetQuestData::Call(Params& a_params)
 {
-	logger::debug("GetQuestData: Invoke Start");
+	REX::DEBUG("GetQuestData: Invoke Start");
 
 	RE::GFxMovie* movie = a_params.movie;
 
@@ -23,7 +23,7 @@ void MICScaleform_GetQuestData::Call(Params& a_params)
 	std::string questEditorIdToFind = modeGFX->GetString();
 	questEditorIdToFind = ToLower(questEditorIdToFind);
 
-	logger::info("{}", questEditorIdToFind.c_str());
+	REX::INFO("{}", questEditorIdToFind.c_str());
 
 	RE::TESDataHandler * datahandler = RE::TESDataHandler::GetSingleton();
 
@@ -38,7 +38,7 @@ void MICScaleform_GetQuestData::Call(Params& a_params)
 	{
 		RE::TESQuest* quest = static_cast<RE::TESQuest*>(questArray[i]);
 
-		logger::info("{}"s, quest->formEditorID.c_str());
+		REX::INFO("{}"s, quest->formEditorID.c_str());
 
 		if (quest )
 		{
@@ -56,12 +56,12 @@ void MICScaleform_GetQuestData::Call(Params& a_params)
 
 	if( matchingQuest ) 
 	{
-		logger::debug("GetQuestData: Quest found");
+		REX::DEBUG("GetQuestData: Quest found");
 		MICGlobals::rootEntry.Clear();
 		formExtraInfoCache->ClearCache();
 
 		GetFormData(&MICGlobals::rootEntry, matchingQuest, nullptr);
-		logger::debug("GetQuestData: Quest data finished");
+		REX::DEBUG("GetQuestData: Quest data finished");
 
 		//Sort the final results
 		MICGlobals::rootEntry.Finalize();
@@ -87,5 +87,5 @@ void MICScaleform_GetQuestData::Call(Params& a_params)
 		consoleLog->Print(errorMessage.c_str());
 	}
 	
-	logger::debug("GetQuestData: Invoke End");
+	REX::DEBUG("GetQuestData: Invoke End");
 }

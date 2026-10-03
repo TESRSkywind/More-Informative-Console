@@ -10,7 +10,7 @@
 
 void GetReferenceFormData(ExtraInfoEntry* resultArray, RE::TESObjectREFR* refForm)
 {
-	logger::debug("GetReferenceFormData Start");
+	REX::DEBUG("GetReferenceFormData Start");
 
 	if (!MICOptions::DisableEditorIDs)
 	{
@@ -43,7 +43,7 @@ void GetReferenceFormData(ExtraInfoEntry* resultArray, RE::TESObjectREFR* refFor
 
 void GetPositionData(ExtraInfoEntry* resultArray, RE::TESObjectREFR* refForm)
 {
-	logger::debug("Starting GetPositionData");
+	REX::DEBUG("Starting GetPositionData");
 
 	ExtraInfoEntry* positionEntry;
 	CreateExtraInfoEntry(positionEntry, GetTranslation("$ReferencePosition"), "", priority_Reference_Location);
@@ -82,13 +82,13 @@ void GetPositionData(ExtraInfoEntry* resultArray, RE::TESObjectREFR* refForm)
 
 	resultArray->PushBack(positionEntry);
 
-	logger::debug("Ending GetPositionData");
+	REX::DEBUG("Ending GetPositionData");
 }
 
 
 void GetTextures(ExtraInfoEntry* resultArray, RE::TESObjectREFR* refForm)
 {
-	logger::debug("Starting GetTextures");
+	REX::DEBUG("Starting GetTextures");
 	auto reference3d = refForm->Get3D();
 
 	if (reference3d)
@@ -98,7 +98,7 @@ void GetTextures(ExtraInfoEntry* resultArray, RE::TESObjectREFR* refForm)
 		RE::BSVisit::TraverseScenegraphGeometries(reference3d, [&](RE::BSGeometry* a_geometry) -> RE::BSVisit::BSVisitControl
 		{
 			//go from the geometry object to the texture set if it has one
-			const auto effect = a_geometry->properties[RE::BSGeometry::States::kEffect];
+			const auto effect = a_geometry->shaderProperty;
 			const auto lightingShader = netimmerse_cast<RE::BSLightingShaderProperty*>(effect.get());
 			if (lightingShader)
 			{
@@ -144,5 +144,5 @@ void GetTextures(ExtraInfoEntry* resultArray, RE::TESObjectREFR* refForm)
 		}
 	}
 
-	logger::debug("Ending GetTextures");
+	REX::DEBUG("Ending GetTextures");
 }

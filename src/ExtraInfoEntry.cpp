@@ -75,7 +75,7 @@ void ExtraInfoEntry::SetMayCopy(bool valueToSet )
 
 void ExtraInfoEntry::CreatePrimaryScaleformArray(RE::GFxValue* mainScaleFormArray, RE::GFxMovie* root)
 {
-	logger::debug("Creating scaleform array {}", IntToString( (int)subarray.size()));
+	REX::DEBUG("Creating scaleform array {}", IntToString( (int)subarray.size()));
 
 	root->CreateArray(mainScaleFormArray);
 
@@ -120,7 +120,7 @@ void ExtraInfoEntry::CreateSecondaryScaleformArray(RE::GFxValue* scaleFormArray,
 	scaleFormArray->PushBack(GFxExtraInfoContents);
 	scaleFormArray->PushBack(GFxExtraInfoCount);
 
-	//logger::debug( (entry1 + " " + entry2 + " " + arraySize ).c_str()); //This causes crashes somehow?
+	//REX::DEBUG( (entry1 + " " + entry2 + " " + arraySize ).c_str()); //This causes crashes somehow?
 }
 
 bool comparePrioritys(ExtraInfoEntry* extraInfoEntryA, ExtraInfoEntry* extraInforEntryB)

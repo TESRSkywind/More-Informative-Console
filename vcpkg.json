@@ -8,8 +8,15 @@
   "dependencies": [
     "boost-atomic",
     "boost-stl-interfaces",
+    "commonlib-shared",
     "span-lite",
-    "spdlog",
+    {
+      "name": "spdlog",
+      "default-features": false,
+      "features": [
+        "wchar"
+      ]
+    },
     "simpleini",
 	"robin-hood-hashing",
     "rsm-binary-io",

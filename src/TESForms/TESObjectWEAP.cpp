@@ -7,7 +7,7 @@
 
 void GetWeaponData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 {
-	logger::debug("GetWeaponData start");
+	REX::DEBUG("GetWeaponData start");
 
 	RE::TESObjectWEAP* weapon = static_cast<RE::TESObjectWEAP*>(baseForm);
 	if (weapon) {
@@ -86,5 +86,5 @@ void GetWeaponData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 		resultArray->PushBack(weightEntry);
 	}
 
-	logger::debug("GetWeaponData End");
+	REX::DEBUG("GetWeaponData End");
 }

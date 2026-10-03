@@ -7,7 +7,7 @@
 
 void GetTextureSet(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 {
-	logger::debug("Starting AddTextureSetEntry");
+	REX::DEBUG("Starting AddTextureSetEntry");
 
 	RE::BGSTextureSet* textureSet = static_cast<RE::BGSTextureSet*>(baseForm);
 
@@ -43,5 +43,5 @@ void GetTextureSet(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 		resultArray->PushBack(textureSetEntry);
 	}
 
-	logger::debug("Ending AddTextureSetEntry");
+	REX::DEBUG("Ending AddTextureSetEntry");
 }

@@ -9,7 +9,7 @@
 
 void GetMagicItemData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 {
-	logger::debug("GetMagicItemData: Start");
+	REX::DEBUG("GetMagicItemData: Start");
 
 	RE::MagicItem* magicItem = static_cast<RE::MagicItem*>(baseForm);
 
@@ -35,11 +35,11 @@ void GetMagicItemData(ExtraInfoEntry* resultArray, RE::TESForm* baseForm)
 			}
 			magicEffectsEntry->PushBack(effectEntry);
 
-			logger::debug("GetSpellData: Ending Active Effect");
+			REX::DEBUG("GetSpellData: Ending Active Effect");
 		}
 
 		resultArray->PushBack(magicEffectsEntry);
 
-		logger::debug("GetMagicItemData: End");
+		REX::DEBUG("GetMagicItemData: End");
 	}
 }
